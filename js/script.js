@@ -20,8 +20,20 @@ function fetchImageUrl(server, imageId, secret, size) {
 }
 function fetchAllData(text, sort, page, pageAmount, size, preCallback, urlCallback) {
   return fetchData(text, sort, page, pageAmount)
+
     .then(result => {
+      if (result.length === 0) {
+        let errorSearch = document.createElement("p");
+        errorSearch.innerHTML = "testa skriva något annat";
+        document.body.appendChild(errorSearch);
+
+
+
+      }
+
       preCallback()
+
+
 
       for (let i = 0; i < result.length; i++) {
         const item = result[i]
@@ -40,31 +52,38 @@ const imageSizeSelectFieldElement = $("#image-size-select-field")
 const imageAmountSelectFieldElement = $("#image-amount-select-field")
 const content = $("#content")
 const errorContent = $("#error-content")
-const loadingElement = $("#loading-element")
+const loadingElement = $(".loader")
+const loaderEl = $(".loader")
+
+
+
 loadingElement.hide()
 
-$(document).ready(function(){
-  $("#form").submit(function(event) {
+
+$(document).ready(function () {
+  $("#form").submit(function (event) {
     event.preventDefault()
 
-    const isTextValid = textFieldElement.val() !== "" && textFieldElement.val() !== undefined 
-    const isSortValid = sortSelectFieldElement.val() !== "" && sortSelectFieldElement.val() !== undefined 
-    const isPageAmountValid = imageAmountSelectFieldElement.val() !== "" && imageAmountSelectFieldElement.val() !== undefined 
-    const isSizeValid = imageSizeSelectFieldElement.val() !== "" && imageSizeSelectFieldElement.val() !== undefined 
+    const isTextValid = textFieldElement.val() !== "" && textFieldElement.val() !== undefined
+    const isSortValid = sortSelectFieldElement.val() !== "" && sortSelectFieldElement.val() !== undefined
+    const isPageAmountValid = imageAmountSelectFieldElement.val() !== "" && imageAmountSelectFieldElement.val() !== undefined
+    const isSizeValid = imageSizeSelectFieldElement.val() !== "" && imageSizeSelectFieldElement.val() !== undefined
     const isValid = isTextValid && isSortValid && isPageAmountValid && isSizeValid
 
     if (isValid) {
       fetchAllData(
-        textFieldElement.val(), 
-        sortSelectFieldElement.val(), 
-        "1", 
-        imageAmountSelectFieldElement.val(), 
+        textFieldElement.val(),
+        sortSelectFieldElement.val(),
+        "1",
+        imageAmountSelectFieldElement.val(),
         imageSizeSelectFieldElement.val(),
         // pre callback
-        () => { 
+        () => {
           content.empty()
           errorContent.empty()
           loadingElement.show()
+
+
         },
         // success callback
         (url) => {
@@ -72,6 +91,7 @@ $(document).ready(function(){
           imageElement.src = url;
           content.append(imageElement)
           loadingElement.hide()
+
         }
       )
     }
@@ -80,8 +100,13 @@ $(document).ready(function(){
       pElement.innerHTML = "Fyll i alla fält för att söka efter bilder."
       errorContent.append(pElement)
       loadingElement.hide()
+
     }
+
+
+
   })
+
 });
 
 

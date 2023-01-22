@@ -1,11 +1,7 @@
-#loading-element{
-    color: red;
-    font-size: 100px;
-    font-style: oblique;
-    
+
     
 
-}
+
 
 button {
     
@@ -41,7 +37,7 @@ img{
     display: block;
 }
 
-#content, #error-content,#loading-element{
+#content, #error-content,.loade,p{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -50,6 +46,7 @@ img{
     max-width: 1000%;
     gap: 20px;
 }
+
 
 @keyframes color {
     0%   { background: #33CCCC; }
@@ -62,8 +59,68 @@ img{
   
   body {
     background: #33CCCC; /* Fallback */
-    animation: color 15s infinite linear;
+    animation: color 12s infinite linear;
     text-align: center;
     padding: 2em;
   }
   
+  .loader, .internal-circle,
+  .external-circle {
+    width: 120px;
+    height: 120px;
+    transform: rotate(-90deg);
+    stroke-linecap: round;
+    stroke-width: 4;
+    fill: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    
+    
+      stroke: #fff;
+      stroke-dashoffset: 0;
+      transform-origin: center;
+    }
+    
+    .internal-circle {
+      stroke-dasharray: 187;
+      animation: internal 1s ease-in-out infinite;
+      opacity: .4;
+    }
+    
+    .external-circle {
+      stroke-dasharray: 312;
+      animation: external 1s linear infinite;
+      opacity: .9;
+    }
+
+  
+  @keyframes internal {
+    0% {
+      stroke-dashoffset: 187;
+    }
+    25% {
+      stroke-dashoffset: 80;
+    }
+    100% {
+      stroke-dashoffset: 187;
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes external {
+    0% {
+      stroke-dashoffset: 312;
+      transform: rotate(70deg);
+    }
+    60% {
+      stroke-dashoffset: -312;
+    }
+    100% {
+      stroke-dashoffset: -312;
+      transform: rotate(450deg);
+    }
+  }
+  
+ 
