@@ -1,8 +1,10 @@
 const apiKey = "7e698065af42f3ccdb7b6bc638e15662"
 const baseUrl = "https://www.flickr.com/services/rest/"
 const urlWithKey = `${baseUrl}?method=flickr.photos.search&api_key=${apiKey}&`
+$('.lds-ring').css('visibility', 'initial')
 function createUrlData(text, sort, page, pageAmount) {
   return `${urlWithKey}text=${text}&sort=${sort}&page=${page}&per_page=${pageAmount}&format=json&nojsoncallback=1`
+ 
 }
 function fetchData(text, sort, page, pageAmount) {
   return fetch(createUrlData(text, sort, page, pageAmount))
@@ -26,6 +28,12 @@ function fetchAllData(text, sort, page, pageAmount, size, preCallback, urlCallba
         let errorSearch = document.createElement("p");
         errorSearch.innerHTML = "testa skriva något annat";
         document.body.appendChild(errorSearch);
+        
+         
+          alert('Please write some text');
+  
+      
+  
 
 
 
@@ -52,12 +60,13 @@ const imageSizeSelectFieldElement = $("#image-size-select-field")
 const imageAmountSelectFieldElement = $("#image-amount-select-field")
 const content = $("#content")
 const errorContent = $("#error-content")
-const loadingElement = $(".loader")
-const loaderEl = $(".loader")
+const loadingElement = $(".loading")
+const myElement = $("<img>");
+// const loaderEl = $(".loading")
 
 
 
-loadingElement.hide()
+// loadingElement.hide()
 
 
 $(document).ready(function () {
@@ -81,7 +90,13 @@ $(document).ready(function () {
         () => {
           content.empty()
           errorContent.empty()
-          loadingElement.show()
+          
+          $("#loading").show();
+
+          setTimeout(function() {
+            $("#loading").hide();
+         }, 3000);
+         
 
 
         },
@@ -90,7 +105,13 @@ $(document).ready(function () {
           const imageElement = document.createElement("img")
           imageElement.src = url;
           content.append(imageElement)
-          loadingElement.hide()
+          
+          setTimeout(function() {
+            $("#loading").hide();
+         }, 3000);
+         
+         
+         
 
         }
       )
@@ -99,7 +120,15 @@ $(document).ready(function () {
       const pElement = document.createElement("p")
       pElement.innerHTML = "Fyll i alla fält för att söka efter bilder."
       errorContent.append(pElement)
-      loadingElement.hide()
+      
+      $("#loading").hide();
+     
+     
+
+      
+
+      
+
 
     }
 
